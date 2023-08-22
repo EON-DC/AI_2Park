@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="image">
+    <file>trash.svg</file>
+    <file>check.svg</file>
+    <file>home.svg</file>
+    <file>save.svg</file>
+    <file>join.svg</file>
+    <file>list-svgrepo-com.svg</file>
+    <file>lock-keyhole.svg</file>
+    <file>lock-keyhole-unlocked.svg</file>
+    <file>camera.png</file>
+    <file>exit.svg</file>
+    <file>logo.png</file>
+  </qresource>
+</RCC>
