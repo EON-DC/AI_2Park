@@ -1,0 +1,7 @@
+{
+  "host": "10.10.20.107",
+  "main_database_name": "db_WD",
+  "user": "postgres",
+  "password": "1234",
+  "port": "5432"
+}
