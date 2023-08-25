@@ -60,23 +60,6 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_hold">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../src/my_qrc.qrc">
-          <normaloff>:/image/check.svg</normaloff>:/image/check.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btn_delete">
         <property name="text">
          <string/>

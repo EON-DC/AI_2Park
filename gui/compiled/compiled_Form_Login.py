@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form_Login(object):
     def setupUi(self, Form_Login):
         Form_Login.setObjectName("Form_Login")
-        Form_Login.resize(950, 800)
+        Form_Login.resize(970, 700)
 
         self.retranslateUi(Form_Login)
         QtCore.QMetaObject.connectSlotsByName(Form_Login)

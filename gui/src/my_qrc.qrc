@@ -1,6 +1,11 @@
 <RCC>
   <qresource prefix="image">
+    <file>img_lock.png</file>
+    <file>img_unlock.png</file>
     <file>trash.svg</file>
+    <file>unlock.gif</file>
+    <file>lock.gif</file>
+    <file>background_header.png</file>
     <file>check.svg</file>
     <file>home.svg</file>
     <file>save.svg</file>

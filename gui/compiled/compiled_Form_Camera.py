@@ -14,10 +14,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form_Camera(object):
     def setupUi(self, Form_Camera):
         Form_Camera.setObjectName("Form_Camera")
-        Form_Camera.resize(950, 800)
+        Form_Camera.resize(970, 700)
         Form_Camera.setStyleSheet("#label_camera{\n"
 "    background-color: #555555;\n"
-"}")
+"}\n"
+"\n"
+"\n"
+"#label_title, #label_title_banner{\n"
+"    font: bold 16pt \"맑은 고딕\";\n"
+"}\n"
+"\n"
+"#label_status {\n"
+"    font: bold 14pt \"맑은 고딕\";\n"
+"}\n"
+"")
         self.verticalLayout = QtWidgets.QVBoxLayout(Form_Camera)
         self.verticalLayout.setObjectName("verticalLayout")
         self.widget_3 = QtWidgets.QWidget(Form_Camera)
@@ -28,12 +38,12 @@ class Ui_Form_Camera(object):
         self.widget_4.setObjectName("widget_4")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget_4)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.label_2 = QtWidgets.QLabel(self.widget_4)
-        self.label_2.setMinimumSize(QtCore.QSize(0, 30))
-        self.label_2.setMaximumSize(QtCore.QSize(16777215, 30))
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout_2.addWidget(self.label_2)
+        self.label_title = QtWidgets.QLabel(self.widget_4)
+        self.label_title.setMinimumSize(QtCore.QSize(0, 30))
+        self.label_title.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.label_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_title.setObjectName("label_title")
+        self.verticalLayout_2.addWidget(self.label_title)
         self.widget = QtWidgets.QWidget(self.widget_4)
         self.widget.setObjectName("widget")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget)
@@ -50,12 +60,12 @@ class Ui_Form_Camera(object):
         self.widget_5.setObjectName("widget_5")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.widget_5)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.label_3 = QtWidgets.QLabel(self.widget_5)
-        self.label_3.setMinimumSize(QtCore.QSize(0, 30))
-        self.label_3.setMaximumSize(QtCore.QSize(16777215, 30))
-        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout_3.addWidget(self.label_3)
+        self.label_title_banner = QtWidgets.QLabel(self.widget_5)
+        self.label_title_banner.setMinimumSize(QtCore.QSize(0, 30))
+        self.label_title_banner.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.label_title_banner.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_title_banner.setObjectName("label_title_banner")
+        self.verticalLayout_3.addWidget(self.label_title_banner)
         self.widget_6 = QtWidgets.QWidget(self.widget_5)
         self.widget_6.setObjectName("widget_6")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.widget_6)
@@ -77,15 +87,15 @@ class Ui_Form_Camera(object):
         self.horizontalLayout.addWidget(self.widget_5)
         self.verticalLayout.addWidget(self.widget_3)
         self.widget_2 = QtWidgets.QWidget(Form_Camera)
-        self.widget_2.setMinimumSize(QtCore.QSize(0, 150))
-        self.widget_2.setMaximumSize(QtCore.QSize(16777215, 150))
+        self.widget_2.setMinimumSize(QtCore.QSize(0, 90))
+        self.widget_2.setMaximumSize(QtCore.QSize(16777215, 90))
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.label = QtWidgets.QLabel(self.widget_2)
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
-        self.horizontalLayout_3.addWidget(self.label)
+        self.label_status = QtWidgets.QLabel(self.widget_2)
+        self.label_status.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_status.setObjectName("label_status")
+        self.horizontalLayout_3.addWidget(self.label_status)
         self.verticalLayout.addWidget(self.widget_2)
 
         self.retranslateUi(Form_Camera)
@@ -94,6 +104,6 @@ class Ui_Form_Camera(object):
     def retranslateUi(self, Form_Camera):
         _translate = QtCore.QCoreApplication.translate
         Form_Camera.setWindowTitle(_translate("Form_Camera", "Form"))
-        self.label_2.setText(_translate("Form_Camera", "실시간 카메라 영상"))
-        self.label_3.setText(_translate("Form_Camera", "확인된 경구약 목록"))
-        self.label.setText(_translate("Form_Camera", "현재까지 0종 약물이 확인되었습니다."))
+        self.label_title.setText(_translate("Form_Camera", "실시간 카메라 영상"))
+        self.label_title_banner.setText(_translate("Form_Camera", "확인된 경구약 목록"))
+        self.label_status.setText(_translate("Form_Camera", "현재까지 0종 약물이 확인되었습니다."))

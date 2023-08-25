@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>950</width>
-    <height>800</height>
+    <width>970</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,17 @@
   <property name="styleSheet">
    <string notr="true">#label_camera{
 	background-color: #555555;
-}</string>
+}
+
+
+#label_title, #label_title_banner{
+	font: bold 16pt &quot;맑은 고딕&quot;;
+}
+
+#label_status {
+	font: bold 14pt &quot;맑은 고딕&quot;;
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -26,7 +36,7 @@
        <widget class="QWidget" name="widget_4" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="label_title">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -79,7 +89,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="label_title_banner">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -158,18 +168,18 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>150</height>
+       <height>90</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>150</height>
+       <height>90</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_status">
         <property name="text">
          <string>현재까지 0종 약물이 확인되었습니다.</string>
         </property>
