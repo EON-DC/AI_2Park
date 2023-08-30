@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="image">
+    <file>pill_loader.gif</file>
+    <file>portrait.jpg</file>
+    <file>pill_sample_3.png</file>
+    <file>pills_background.png</file>
+    <file>pill_sample_2.png</file>
+    <file>pill_sample_1.png</file>
     <file>img_lock.png</file>
     <file>img_unlock.png</file>
     <file>trash.svg</file>

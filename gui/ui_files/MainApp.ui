@@ -58,6 +58,11 @@ QStackedWidget {
 	color: rgb(74, 134, 232);
 	font: bold 12pt &quot;맑은 고딕&quot;;
 }
+#label_user_info{
+	color: rgb(74, 134, 232);
+	font: bold 12pt &quot;맑은 고딕&quot;;
+	padding: 5px;
+}
 
 #liner{
 	background-color : #7DB9C3;
@@ -165,10 +170,36 @@ QStackedWidget {
          <item>
           <widget class="QStackedWidget" name="stackedWidget">
            <property name="currentIndex">
-            <number>2</number>
+            <number>1</number>
            </property>
-           <widget class="QWidget" name="page_1">
+           <widget class="QWidget" name="page_0">
             <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QVBoxLayout" name="layout_page_0">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_1">
+            <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -194,7 +225,7 @@ QStackedWidget {
             </layout>
            </widget>
            <widget class="QWidget" name="page_2">
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <layout class="QVBoxLayout" name="verticalLayout_7">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -220,7 +251,7 @@ QStackedWidget {
             </layout>
            </widget>
            <widget class="QWidget" name="page_3">
-            <layout class="QVBoxLayout" name="verticalLayout_7">
+            <layout class="QVBoxLayout" name="verticalLayout_8">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -237,7 +268,29 @@ QStackedWidget {
               <number>0</number>
              </property>
              <item>
-              <layout class="QVBoxLayout" name="layout_page_3">
+              <layout class="QVBoxLayout" name="layout_page_3"/>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_4">
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QVBoxLayout" name="layout_page_4">
                <property name="spacing">
                 <number>0</number>
                </property>
@@ -245,9 +298,32 @@ QStackedWidget {
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="page_4"/>
-           <widget class="QWidget" name="page_5"/>
-           <widget class="QWidget" name="page_6"/>
+           <widget class="QWidget" name="page_5">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QVBoxLayout" name="layout_page_5">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+              </layout>
+             </item>
+            </layout>
+           </widget>
            <widget class="QWidget" name="page_7"/>
           </widget>
          </item>
@@ -298,6 +374,12 @@ QStackedWidget {
             </property>
             <item>
              <widget class="QWidget" name="widget_2" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -404,12 +486,25 @@ QStackedWidget {
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_user_info">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+              <property name="scaledContents">
+               <bool>false</bool>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
+               <enum>QSizePolicy::Expanding</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -418,6 +513,45 @@ QStackedWidget {
                </size>
               </property>
              </spacer>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_banner_3" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>80</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
+              <widget class="BannerButton" name="btn_banner_3">
+               <property name="geometry">
+                <rect>
+                 <x>100</x>
+                 <y>10</y>
+                 <width>160</width>
+                 <height>60</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>홈화면으로   </string>
+               </property>
+               <property name="icon">
+                <iconset resource="../src/my_qrc.qrc">
+                 <normaloff>:/image/home.svg</normaloff>:/image/home.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
             </item>
             <item>
              <widget class="QWidget" name="widget_banner_1" native="true">
@@ -459,6 +593,45 @@ QStackedWidget {
              </widget>
             </item>
             <item>
+             <widget class="QWidget" name="widget_banner_4" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>80</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
+              <widget class="BannerButton" name="btn_banner_4">
+               <property name="geometry">
+                <rect>
+                 <x>100</x>
+                 <y>10</y>
+                 <width>160</width>
+                 <height>60</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>경구약 확인       </string>
+               </property>
+               <property name="icon">
+                <iconset resource="../src/my_qrc.qrc">
+                 <normaloff>:/image/list-svgrepo-com.svg</normaloff>:/image/list-svgrepo-com.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
              <widget class="QWidget" name="widget_banner_2" native="true">
               <property name="minimumSize">
                <size>
@@ -482,55 +655,16 @@ QStackedWidget {
                 </rect>
                </property>
                <property name="text">
-                <string>저장 목록     </string>
+                <string>저장 목록         </string>
                </property>
                <property name="icon">
                 <iconset resource="../src/my_qrc.qrc">
-                 <normaloff>:/image/list-svgrepo-com.svg</normaloff>:/image/list-svgrepo-com.svg</iconset>
+                 <normaloff>:/image/save.svg</normaloff>:/image/save.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>60</width>
-                 <height>60</height>
-                </size>
-               </property>
-              </widget>
-             </widget>
-            </item>
-            <item>
-             <widget class="QWidget" name="widget_banner_3" native="true">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>80</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>80</height>
-               </size>
-              </property>
-              <widget class="BannerButton" name="btn_banner_3">
-               <property name="geometry">
-                <rect>
-                 <x>100</x>
-                 <y>10</y>
-                 <width>160</width>
-                 <height>60</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>홈화면으로   </string>
-               </property>
-               <property name="icon">
-                <iconset resource="../src/my_qrc.qrc">
-                 <normaloff>:/image/home.svg</normaloff>:/image/home.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>60</width>
-                 <height>60</height>
+                 <width>50</width>
+                 <height>50</height>
                 </size>
                </property>
               </widget>

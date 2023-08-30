@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QSize, QRect, QPropertyAnimation
+from PyQt5.QtCore import QRect, QPropertyAnimation
 from PyQt5.QtWidgets import QPushButton
 
 

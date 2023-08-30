@@ -1,9 +1,12 @@
-from PyQt5.QtCore import QSize, QRect, QPropertyAnimation
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QMovie, QPixmap
 from PyQt5.QtWidgets import QLabel
 
 
 class BannerLabel(QLabel):
+    # 클릭이벤트 설정
+    clicked = pyqtSignal()
+
     hovered_style = """
         QLabel{
             border: 2px solid #DFDFDF;
@@ -14,7 +17,6 @@ class BannerLabel(QLabel):
             border: 2px solid #FFFFFF;
         }
     """
-
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -42,3 +44,6 @@ class BannerLabel(QLabel):
     def start_animation(self, command):
         """ Start the size animation """
         pass
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
