@@ -23,6 +23,7 @@ class FormCamera(QtWidgets.QWidget, Ui_Form_Camera):
         self.timer = QTimer(self)
         self.detection_model = YOLO(r"model/best.pt")
         self.cap = cv2.VideoCapture(0)
+        # self.pretrained_model = keras.models.load_model(r"model/model_test.h5")
         self.pretrained_model = None
         self.predicted_medication_mapping_list = list()
         self.temp_medi_df = pd.DataFrame()
@@ -70,7 +71,7 @@ class FormCamera(QtWidgets.QWidget, Ui_Form_Camera):
                 img_list = [img]
                 img_list = np.array(img_list)
                 # result = self.pretrained_model.predict(np.array(img_list), verbose=0)
-                result = np.array((1,0))
+                result = np.array([[ 5.1012e-09,  3.7004e-11,           1]])
                 predict_result = np.round(result)
                 predict_classes = predict_result.argmax(axis=1)
                 with open(r"model/labelencoder.pickle", "rb") as file:

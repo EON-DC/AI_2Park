@@ -166,3 +166,4 @@ class Ui_Saved_Prescription_Item(object):
         self.label_day_duration.setText(_translate("Saved_Prescription_Item", "복용기간: 2일"))
         self.label_medi_amount.setText(_translate("Saved_Prescription_Item", "복용량:2 tab"))
         self.label_daily_count.setText(_translate("Saved_Prescription_Item", "하루복용횟수: 3회"))
+from gui.compiled import my_qrc_rc

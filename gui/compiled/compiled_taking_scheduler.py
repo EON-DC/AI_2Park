@@ -368,3 +368,4 @@ class Ui_FormTakingScheduler(object):
         self.label_17.setText(_translate("FormTakingScheduler", "오후 9:00"))
         self.btn_save.setText(_translate("FormTakingScheduler", "계획 저장"))
         self.btn_cancel.setText(_translate("FormTakingScheduler", "취소"))
+from gui.compiled import my_qrc_rc

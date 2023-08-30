@@ -213,3 +213,4 @@ class Ui_Form_Login(object):
         self.label_2.setText(_translate("Form_Login", "2차 기업 프로젝트 : 2Parks\n"
 " 박광현, 박호현의 인공지능을 활용한\n"
 "투약 식별 및 복용관리 프로그램"))
+from gui.compiled import my_qrc_rc

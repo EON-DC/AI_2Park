@@ -52,3 +52,4 @@ class Ui_Form_Loader(object):
         _translate = QtCore.QCoreApplication.translate
         Form_Loader.setWindowTitle(_translate("Form_Loader", "Form"))
         self.label_2.setText(_translate("Form_Loader", "화면 구성 중...."))
+from gui.compiled import my_qrc_rc

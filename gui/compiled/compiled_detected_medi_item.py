@@ -61,3 +61,4 @@ class Ui_Widget_Detected_Item(object):
         Widget_Detected_Item.setWindowTitle(_translate("Widget_Detected_Item", "Form"))
         self.label_medi_name.setText(_translate("Widget_Detected_Item", "타이레놀 서방정 850mg"))
         self.actionMedi_Item.setText(_translate("Widget_Detected_Item", "Medi_Item"))
+from gui.compiled import my_qrc_rc

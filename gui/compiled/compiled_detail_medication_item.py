@@ -171,3 +171,4 @@ class Ui_Detail_Item(object):
         self.label_class_no.setText(_translate("Detail_Item", "[114] 해열·진통·소염제"))
         self.label_2.setText(_translate("Detail_Item", "분류:"))
         self.label_etc_otc.setText(_translate("Detail_Item", "일반의약품"))
+from gui.compiled import my_qrc_rc

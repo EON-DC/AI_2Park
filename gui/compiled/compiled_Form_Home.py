@@ -199,3 +199,4 @@ class Ui_Form_Home(object):
         self.label_14.setText(_translate("Form_Home", "웹캠이 연결되었는지 확인해주세요"))
         self.label_16.setText(_translate("Form_Home", "AI hub에서 제공한 데이터의 일부만 활용했기 때문에 소량의 알약들만 구분 가능합니다."))
         self.label_15.setText(_translate("Form_Home", "경구약 복용 데이터셋은 임의로 만든 것이니 실제와는 다릅니다."))
+from gui.compiled import my_qrc_rc
