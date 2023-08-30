@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
+    <width>806</width>
     <height>128</height>
    </rect>
   </property>
@@ -205,8 +205,17 @@ QPushButton:pressed {
             </item>
             <item>
              <widget class="QLabel" name="label_saved_time">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string>저장일시: 2023-08-26 13:11</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -214,6 +223,9 @@ QPushButton:pressed {
              <spacer name="horizontalSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -276,6 +288,9 @@ QPushButton:pressed {
              <widget class="QLabel" name="label_start_date">
               <property name="text">
                <string>복용시작일:2023-08-30</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

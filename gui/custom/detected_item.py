@@ -21,14 +21,16 @@ class DetectedItem(QtWidgets.QWidget, Ui_Widget_Detected_Item):
     def activate_item(self):
         self.btn_delete.clicked.connect(lambda state: self.close())
 
-    def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
+    def deleteLater(self) -> None:
         self.form_camera.predicted_medication_mapping_list.remove(self.get_medi_code())
         self.form_camera.refresh_medication_count()
+        super().deleteLater()
 
     def get_medi_code(self):
         return int(self.medication["dl_mapping_code"][0][2:])
 
     def add_medication_to_controller(self):
+        self.btn_save.setEnabled(False)
         # todo : controller로 해당 로직 옮겨야함
         user_id = self.controller.user_df['user_id'][0]
         mapping_code = int(self.medication['dl_mapping_code'][0][2:]) # 기본적으로 붙은 "K-"지워줘야함

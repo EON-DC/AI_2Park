@@ -4,6 +4,7 @@ import pandas as pd
 import yaml
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QMessageBox
 
 from database.db_connector import DBConnector
 from gui.compiled.compiled_MainApp import Ui_MainApp
@@ -15,7 +16,8 @@ from gui.form_saved_list import FormSavedList
 
 
 class UIController(QtWidgets.QWidget, Ui_MainApp):
-
+    login_window_size = QSize(700, 600)
+    default_window_size = QSize(1130, 800)
     def __init__(self, db_conn: DBConnector):
         super().__init__()
         self.setupUi(self)
@@ -56,6 +58,10 @@ class UIController(QtWidgets.QWidget, Ui_MainApp):
         if command not in command_list:
             raise "커맨드 입력 확인"
         elif command == "logout":
+            reply = QMessageBox.question(self, '확인', '로그아웃 하시겠습니까?',
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.No:
+                return
             self.hide_title(True)
             self.stackedWidget.setCurrentIndex(0)
             self.get_app_config()
@@ -95,18 +101,16 @@ class UIController(QtWidgets.QWidget, Ui_MainApp):
         self.update_app_config()
 
     def hide_title(self, command):
-        login_window_size = QSize(980, 700)
-        default_window_size = QSize(1130, 800)
-
         if command is True:
-            self.resize(login_window_size)
             self.widget_header.setVisible(False)
             self.banner.setVisible(False)
+            self.resize(self.login_window_size)
 
         else:
-            self.resize(default_window_size)
             self.widget_header.setVisible(True)
             self.banner.setVisible(True)
+            self.resize(self.default_window_size)
+
 
     def get_app_config(self):
         current_path = os.getcwd()

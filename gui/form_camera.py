@@ -102,7 +102,12 @@ class FormCamera(QtWidgets.QWidget, Ui_Form_Camera):
         self.predicted_medication_mapping_list.append(mapping_code)
         self.refresh_medication_count()
 
+    def remove_medication_list(self, mapping_code):
+        self.predicted_medication_mapping_list.remove(mapping_code)
+        self.refresh_medication_count()
+
     def verify_same_medication(self, mapping_code):
+        mapping_code = "K-"+f"{mapping_code}"
         try:
             result = self.controller.selected_prescription_df[
                 self.controller.selected_prescription_df["dl_mapping_code"] == mapping_code]

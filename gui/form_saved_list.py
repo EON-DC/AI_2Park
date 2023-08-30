@@ -21,13 +21,13 @@ class FormSavedList(QtWidgets.QWidget, Ui_Form_Saved_Medi_List):
     def refresh_list_widget(self):
         self.listWidget.clear()
         # db에서 로그인 데이터 바탕으로 처방 정보 리스트 불러오기
-        prescription_df = self.controller.db_conn.find_all_prescriptions_by_user_id(self.controller.user_df["user_id"][0])
-        prescription_df:pd.DataFrame
-        # 약 정보 가져오기
-        temp_medi_df = pd.DataFrame()
+        prescription_df = self.controller.db_conn.find_all_prescriptions_by_user_id(
+            self.controller.user_df["user_id"][0])
+        prescription_df: pd.DataFrame
 
         for idx, prescription in prescription_df.iterrows():
             item = QListWidgetItem(self.listWidget)
+            # 약 정보 가져오기
             medi_df = self.controller.db_conn.find_medication_by_medication_id(prescription["medication_id"])
             widget = SavedPrescriptionItem(self, self.controller, prescription, medi_df)
             item.setSizeHint(widget.sizeHint())
@@ -37,7 +37,6 @@ class FormSavedList(QtWidgets.QWidget, Ui_Form_Saved_Medi_List):
     def create_new_medication_list(self):
         self.controller.selected_saved_list_id = None
         self.controller.set_page("camera")
-
 
     def delete_selected_medi(self):
         reply = QMessageBox.question(self, '확인', '해당 처방기록을 삭제하시겠습니까? 다시 불러올 수 없습니다.',

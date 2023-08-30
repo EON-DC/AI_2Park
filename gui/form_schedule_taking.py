@@ -17,8 +17,8 @@ class FormTakingSchedule(QtWidgets.QDialog, Ui_FormTakingScheduler):
         self.medication = medication
         self.prescription = prescription # series
         self.setupUi(self)
-        self.set_up_initial()
         self.saved_schedule_list = list()
+        self.set_up_initial()
 
     def set_up_initial(self):
         # prescription 정보대로 수정하기
@@ -44,7 +44,8 @@ class FormTakingSchedule(QtWidgets.QDialog, Ui_FormTakingScheduler):
         self.spinBox_daily_eat_count.valueChanged.connect(lambda val: self.spinBox_first_offset.setMaximum(val))
 
         # 아래 박스 안보이게
-        self.widget_lower.setVisible(False)
+        # self.widget_lower.setVisible(False)
+        self.create_schedule_table()
 
         # 계획표 생성 버튼 누르면 보이게
         self.btn_create_table.clicked.connect(lambda state: self.create_schedule_table())

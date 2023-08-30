@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Detail_Item(object):
     def setupUi(self, Detail_Item):
         Detail_Item.setObjectName("Detail_Item")
-        Detail_Item.resize(836, 132)
+        Detail_Item.resize(755, 133)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
