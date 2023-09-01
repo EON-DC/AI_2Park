@@ -1,0 +1,8 @@
+path: ../data_folder/obj_main/data
+train: images/train
+val: images/train
+
+names:
+  0: 'circle'
+  1: 'ellipse'
+

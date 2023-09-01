@@ -28,7 +28,10 @@ class Ui_Form_Camera(object):
 "    font: bold 14pt \"맑은 고딕\";\n"
 "}\n"
 "\n"
-"\n"
+"#label_camera_guide{\n"
+"    font: bold 12pt \"맑은 고딕\";\n"
+"    color: #E8864A;\n"
+"}\n"
 "\n"
 "QPushButton {\n"
 "    background-color: #ffffff;\n"
@@ -71,6 +74,15 @@ class Ui_Form_Camera(object):
         self.label_camera.setObjectName("label_camera")
         self.horizontalLayout_2.addWidget(self.label_camera)
         self.verticalLayout_2.addWidget(self.widget)
+        self.label_camera_guide = QtWidgets.QLabel(self.widget_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_camera_guide.sizePolicy().hasHeightForWidth())
+        self.label_camera_guide.setSizePolicy(sizePolicy)
+        self.label_camera_guide.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_camera_guide.setObjectName("label_camera_guide")
+        self.verticalLayout_2.addWidget(self.label_camera_guide)
         self.horizontalLayout.addWidget(self.widget_4)
         self.widget_5 = QtWidgets.QWidget(self.widget_3)
         self.widget_5.setMinimumSize(QtCore.QSize(300, 0))
@@ -99,7 +111,7 @@ class Ui_Form_Camera(object):
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.verticalLayout_4.addWidget(self.widget_medi_list)
         self.scrollArea = QtWidgets.QScrollArea(self.widget_6)
-        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -149,5 +161,6 @@ class Ui_Form_Camera(object):
         _translate = QtCore.QCoreApplication.translate
         Form_Camera.setWindowTitle(_translate("Form_Camera", "Form"))
         self.label_title.setText(_translate("Form_Camera", "실시간 카메라 영상"))
+        self.label_camera_guide.setText(_translate("Form_Camera", "아직 정확도가 낮습니다. 조금만 기다려주세요."))
         self.label_title_banner.setText(_translate("Form_Camera", "확인된 경구약 목록"))
         self.label_status.setText(_translate("Form_Camera", "현재까지 0종 약물이 확인되었습니다."))

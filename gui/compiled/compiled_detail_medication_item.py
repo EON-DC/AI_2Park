@@ -70,7 +70,7 @@ class Ui_Detail_Item(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
         self.widget_2.setSizePolicy(sizePolicy)
-        self.widget_2.setMinimumSize(QtCore.QSize(200, 0))
+        self.widget_2.setMinimumSize(QtCore.QSize(250, 0))
         self.widget_2.setMaximumSize(QtCore.QSize(200, 16777215))
         self.widget_2.setObjectName("widget_2")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget_2)

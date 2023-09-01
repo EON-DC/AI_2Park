@@ -21,10 +21,11 @@ class DetectedItem(QtWidgets.QWidget, Ui_Widget_Detected_Item):
     def activate_item(self):
         self.btn_delete.clicked.connect(lambda state: self.close())
 
-    def deleteLater(self) -> None:
+    def closeEvent(self, e) -> None:
         self.form_camera.predicted_medication_mapping_list.remove(self.get_medi_code())
         self.form_camera.refresh_medication_count()
-        super().deleteLater()
+        print("detected item 의 deleteLater 실행됨")
+        super().close()
 
     def get_medi_code(self):
         return int(self.medication["dl_mapping_code"][0][2:])
@@ -33,14 +34,15 @@ class DetectedItem(QtWidgets.QWidget, Ui_Widget_Detected_Item):
         self.btn_save.setEnabled(False)
         # todo : controller로 해당 로직 옮겨야함
         user_id = self.controller.user_df['user_id'][0]
-        mapping_code = int(self.medication['dl_mapping_code'][0][2:]) # 기본적으로 붙은 "K-"지워줘야함
+        mapping_code = int(self.medication['dl_mapping_code'][0][2:])  # 기본적으로 붙은 "K-"지워줘야함
         created_prescription_df = self.controller.db_conn.create_prescription_with_medication_mapping_id(
             user_id,
             mapping_code,
             1,  # day_duration
             1,  # eat_amount
             1,  # daily_eat_count
+            1,  # first_day_eat_count
         )
-
         self.controller.selected_prescription_df = pd.concat(
             [self.controller.selected_prescription_df, created_prescription_df])
+        self.controller.form_camera.refresh_medication_count()

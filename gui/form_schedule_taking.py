@@ -2,20 +2,21 @@ import traceback
 
 import pandas as pd
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QDateTime, QTime
+from PyQt5.QtCore import QDateTime, QTime, QByteArray
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QTimeEdit
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QLabel, QTimeEdit, QMessageBox
 
 from gui.compiled.compiled_taking_scheduler import Ui_FormTakingScheduler
 from gui.custom.label_medi_schedule import ScheduleLabel
 
 
 class FormTakingSchedule(QtWidgets.QDialog, Ui_FormTakingScheduler):
-    def __init__(self, main_controller, medication, prescription:pd.Series):
+    def __init__(self, main_controller, medication, prescription: pd.Series):
         super().__init__()
         self.controller = main_controller
         self.medication = medication
-        self.prescription = prescription # series
+        self.prescription = prescription  # series
         self.setupUi(self)
         self.saved_schedule_list = list()
         self.set_up_initial()
@@ -24,13 +25,15 @@ class FormTakingSchedule(QtWidgets.QDialog, Ui_FormTakingScheduler):
         # prescription 정보대로 수정하기
         now_qtime = QDateTime.currentDateTime()
         self.dateEdit_start.setDate(now_qtime.date())
+        self.label_medi_name.setText(self.medication['dl_name'][0])
         try:
-            self.spinBox_day_duration.stepBy(self.prescription["day_duration"])
-            self.spinBox_taking_amount.stepBy(int((self.prescription["eat_amount"]/0.5)))
-            self.spinBox_daily_eat_count.stepBy(self.prescription["daily_eat_count"])
+            self.spinBox_day_duration.stepBy(self.prescription["day_duration"] - 1)
+            self.spinBox_taking_amount.stepBy(int((self.prescription["eat_amount"] / 0.5) - 2))
+            self.spinBox_daily_eat_count.stepBy(self.prescription["daily_eat_count"] - 1)
         except Exception:
             traceback.print_exc()
         # time edit 삭제
+
         self.widget_taking_first.setVisible(False)
         self.widget_taking_second.setVisible(False)
         self.widget_taking_third.setVisible(False)
@@ -38,26 +41,41 @@ class FormTakingSchedule(QtWidgets.QDialog, Ui_FormTakingScheduler):
 
         self.widget_time_edit.setLayout(QHBoxLayout(self.widget_lower_columns))
 
+        # 이미지 조회
+        try:
+            medication_id = int(self.medication["medication_id"][0])
+            image_bytes = self.controller.db_conn.find_image_by_medication_id_as_byte_stream(medication_id)
+            byte_array = QByteArray(image_bytes.getvalue())
+            medi_pixmap = QPixmap()
+            medi_pixmap.loadFromData(byte_array)
+            self.label_medi_image.setPixmap(medi_pixmap)
+        except:
+            traceback.print_exc()
+            print(f"이미지 못찾음 medication id: {medication_id}, 이름: {self.medication['dl_name']}")
+
         # 스핀박스 조절할 때마다 계산하도록
         self.spinBox_daily_eat_count.valueChanged.connect(lambda val: self.update_taking_count())
-        self.spinBox_day_duration.valueChanged.connect(lambda val: self.update_taking_count())
         self.spinBox_daily_eat_count.valueChanged.connect(lambda val: self.spinBox_first_offset.setMaximum(val))
-
+        self.spinBox_day_duration.valueChanged.connect(lambda val: self.update_taking_count())
+        self.spinBox_first_offset.valueChanged.connect(lambda val: self.create_schedule_table())
         # 아래 박스 안보이게
         # self.widget_lower.setVisible(False)
         self.create_schedule_table()
 
         # 계획표 생성 버튼 누르면 보이게
-        self.btn_create_table.clicked.connect(lambda state: self.create_schedule_table())
+        self.btn_create_table.setVisible(False)
+        # self.btn_create_table.clicked.connect(lambda state: self.create_schedule_table())
 
         # 계획표 저장 연결
         self.btn_save.clicked.connect(lambda state: self.save_schedule_as_label())
+        self.btn_cancel.clicked.connect(lambda state: self.close())
 
     def update_taking_count(self):
         day_duration = int(self.spinBox_day_duration.text())
         daily_eat_count = int(self.spinBox_daily_eat_count.text())
         total_count = day_duration * daily_eat_count
         self.label_taking_count.setText(f"(총 {total_count}회차 복용)")
+        self.create_schedule_table()
 
     def create_schedule_table(self):
         callable_day_count = ["첫번째", "두번째", "세번째", "네번째"]
@@ -151,9 +169,21 @@ class FormTakingSchedule(QtWidgets.QDialog, Ui_FormTakingScheduler):
             lb.time_change(col_index, (hour, min))
 
     def save_schedule_as_label(self):
+        prescription_id = self.prescription['prescription_id']
+        day_duration = int(self.spinBox_day_duration.text())
+        eat_amount = float(self.spinBox_taking_amount.text())
+        daily_eat_count = int(self.spinBox_daily_eat_count.text())
+        first_day_eat_count = int(self.spinBox_first_offset.text())
+        taking_start_timestamp = self.dateEdit_start.date()
+        self.controller.db_conn.update_prescription(prescription_id,
+                                                    day_duration,
+                                                    eat_amount,
+                                                    daily_eat_count,
+                                                    first_day_eat_count,
+                                                    taking_start_timestamp)
+        self.controller.db_conn.delete_schedule_by_prescription_id(prescription_id)
         for schedule in self.saved_schedule_list:
             schedule: ScheduleLabel
-            prescription_id = self.prescription['prescription_id']
             taking_index = schedule.taking_index
             year = schedule.year
             month = schedule.month
@@ -164,3 +194,7 @@ class FormTakingSchedule(QtWidgets.QDialog, Ui_FormTakingScheduler):
                 prescription_id, taking_index, year, month, day, hour, minute
             )
             print("DB등록됨 : ", schedule)
+        QMessageBox.about(self, "알림", f"{len(self.saved_schedule_list)} 개의 계획이 저장됐습니다.")
+        self.controller.form_detail.refresh_list_widget()
+        self.controller.form_saved_list.refresh_list_widget()
+        self.close()

@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import yaml
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, QPropertyAnimation, QRect, QTimer
 from PyQt5.QtWidgets import QMessageBox
 
 from database.db_connector import DBConnector
@@ -16,8 +16,9 @@ from gui.form_saved_list import FormSavedList
 
 
 class UIController(QtWidgets.QWidget, Ui_MainApp):
-    login_window_size = QSize(700, 600)
-    default_window_size = QSize(1130, 800)
+    login_window_size = QRect(450, 80, 1000, 760)
+    default_window_size = QRect(450, 80, 1155, 940)
+
     def __init__(self, db_conn: DBConnector):
         super().__init__()
         self.setupUi(self)
@@ -32,6 +33,8 @@ class UIController(QtWidgets.QWidget, Ui_MainApp):
         self.form_detail = FormMedicationDetails(self)
         self.user_df = None
         self.selected_prescription_df = pd.DataFrame()
+        self.animation = QPropertyAnimation(self, b"geometry")
+        self.animation.setDuration(600)  # 200 milliseconds
         self.set_up_initial()
 
     def set_up_initial(self):
@@ -67,7 +70,9 @@ class UIController(QtWidgets.QWidget, Ui_MainApp):
             self.get_app_config()
             # 저장 정보 비우기
             self.user_df.drop(self.user_df.index)
-            self.selected_prescription_df.drop(self.selected_prescription_df.index)
+            self.form_camera.temp_medi_df.drop(self.form_camera.temp_medi_df.index, inplace=True, axis="rows")
+            self.form_camera.refresh_medication_count()
+            self.selected_prescription_df.drop(self.selected_prescription_df.index, inplace=True, axis="rows")
         elif command == "home":
             self.label_section_title.setText("프로그램 소개")
             self.stackedWidget.setCurrentIndex(1)
@@ -96,21 +101,37 @@ class UIController(QtWidgets.QWidget, Ui_MainApp):
         print(user_df)
         self.label_user_info.setText(f"{user_df['name'][0]}님, 안녕하세요.")
         self.form_login.clear_line_edit()
-        self.set_page("home")
         self.hide_title(False)
+        self.set_page("home")
         self.update_app_config()
 
     def hide_title(self, command):
         if command is True:
             self.widget_header.setVisible(False)
             self.banner.setVisible(False)
-            self.resize(self.login_window_size)
+            self.start_animation("logout")
 
         else:
-            self.widget_header.setVisible(True)
-            self.banner.setVisible(True)
-            self.resize(self.default_window_size)
+            self.start_animation("login")
+            QTimer.singleShot(600, lambda: self.show_header_widgets())
 
+    def show_header_widgets(self):
+        self.widget_header.setVisible(True)
+        self.banner.setVisible(True)
+
+    def start_animation(self, command):
+        """ Start the size animation """
+        if command == "logout":
+            start_rect = self.default_window_size
+            end_rect = self.login_window_size
+
+        else:
+            start_rect = self.login_window_size
+            end_rect = self.default_window_size
+
+        self.animation.setStartValue(start_rect)
+        self.animation.setEndValue(end_rect)
+        self.animation.start()
 
     def get_app_config(self):
         current_path = os.getcwd()

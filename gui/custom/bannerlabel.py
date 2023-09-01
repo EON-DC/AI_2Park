@@ -41,9 +41,5 @@ class BannerLabel(QLabel):
         self.movie_lock.stop()
         self.setPixmap(self.unlocked_image)
 
-    def start_animation(self, command):
-        """ Start the size animation """
-        pass
-
     def mousePressEvent(self, event):
         self.clicked.emit()

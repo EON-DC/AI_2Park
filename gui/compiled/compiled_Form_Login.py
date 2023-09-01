@@ -14,9 +14,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form_Login(object):
     def setupUi(self, Form_Login):
         Form_Login.setObjectName("Form_Login")
-        Form_Login.resize(970, 700)
+        Form_Login.resize(1000, 700)
         Form_Login.setStyleSheet("#widget{    \n"
 "    background-image: url(:/image/pills_background.png);\n"
+"    border: 5px solid  #59749F;\n"
 "}\n"
 "\n"
 "#widget_login_form{\n"
@@ -32,8 +33,11 @@ class Ui_Form_Login(object):
 "}\n"
 "\n"
 "#label_2{\n"
+"    font: bold 12pt \"맑은 고딕\";\n"
+"    color: #E8864A;\n"
+"}\n"
+"#label_3, #label_4{\n"
 "    font: bold;\n"
-"    color: #F4F4F4;\n"
 "}\n"
 "\n"
 "#widget_6 QPushButton {\n"
@@ -61,17 +65,48 @@ class Ui_Form_Login(object):
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.widget = QtWidgets.QWidget(Form_Login)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
+        self.widget.setSizePolicy(sizePolicy)
         self.widget.setObjectName("widget")
-        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.widget)
-        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.widget)
+        self.horizontalLayout_7.setContentsMargins(-1, -1, 20, -1)
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.widget_10 = QtWidgets.QWidget(self.widget)
         self.widget_10.setObjectName("widget_10")
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.widget_10)
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem = QtWidgets.QSpacerItem(82, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem)
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.widget_10)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.widget_slogan = QtWidgets.QWidget(self.widget_10)
+        self.widget_slogan.setMaximumSize(QtCore.QSize(16777215, 250))
+        self.widget_slogan.setObjectName("widget_slogan")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget_slogan)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.widget_3 = QtWidgets.QWidget(self.widget_slogan)
+        self.widget_3.setObjectName("widget_3")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget_3)
+        self.verticalLayout.setObjectName("verticalLayout")
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
+        self.label = QtWidgets.QLabel(self.widget_3)
+        font = QtGui.QFont()
+        font.setFamily("배달의민족 도현")
+        font.setPointSize(24)
+        self.label.setFont(font)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem1)
+        self.label_2 = QtWidgets.QLabel(self.widget_3)
+        self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout.addWidget(self.label_2)
+        self.verticalLayout_2.addWidget(self.widget_3)
+        self.verticalLayout_6.addWidget(self.widget_slogan)
         self.widget_login_form = QtWidgets.QWidget(self.widget_10)
-        self.widget_login_form.setMaximumSize(QtCore.QSize(16777215, 350))
+        self.widget_login_form.setMaximumSize(QtCore.QSize(16777215, 300))
         self.widget_login_form.setObjectName("widget_login_form")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_login_form)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
@@ -79,8 +114,8 @@ class Ui_Form_Login(object):
         self.widget_2.setObjectName("widget_2")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.widget_2)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem1)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem2)
         self.widget_4 = QtWidgets.QWidget(self.widget_2)
         self.widget_4.setMinimumSize(QtCore.QSize(0, 50))
         self.widget_4.setObjectName("widget_4")
@@ -154,46 +189,20 @@ class Ui_Form_Login(object):
         self.horizontalLayout_4.addWidget(self.btn_login)
         self.verticalLayout_3.addWidget(self.widget_8)
         self.verticalLayout_4.addWidget(self.widget_6)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem2)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem3)
         self.horizontalLayout_2.addWidget(self.widget_2)
-        self.horizontalLayout_7.addWidget(self.widget_login_form)
-        spacerItem3 = QtWidgets.QSpacerItem(82, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem3)
-        self.widget_slogan = QtWidgets.QWidget(self.widget_10)
-        self.widget_slogan.setMaximumSize(QtCore.QSize(16777215, 250))
-        self.widget_slogan.setObjectName("widget_slogan")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget_slogan)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.widget_3 = QtWidgets.QWidget(self.widget_slogan)
-        self.widget_3.setObjectName("widget_3")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget_3)
-        self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem4)
-        self.label = QtWidgets.QLabel(self.widget_3)
-        font = QtGui.QFont()
-        font.setFamily("배달의민족 도현")
-        font.setPointSize(24)
-        self.label.setFont(font)
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem5)
-        self.label_2 = QtWidgets.QLabel(self.widget_3)
-        self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout.addWidget(self.label_2)
-        self.verticalLayout_2.addWidget(self.widget_3)
-        self.horizontalLayout_7.addWidget(self.widget_slogan)
-        spacerItem6 = QtWidgets.QSpacerItem(71, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem6)
-        self.verticalLayout_5.addWidget(self.widget_10)
+        self.verticalLayout_6.addWidget(self.widget_login_form)
+        self.horizontalLayout_7.addWidget(self.widget_10)
         self.widget_9 = QtWidgets.QWidget(self.widget)
-        self.widget_9.setMinimumSize(QtCore.QSize(0, 150))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_9.sizePolicy().hasHeightForWidth())
+        self.widget_9.setSizePolicy(sizePolicy)
+        self.widget_9.setMinimumSize(QtCore.QSize(582, 0))
         self.widget_9.setObjectName("widget_9")
-        self.verticalLayout_5.addWidget(self.widget_9)
+        self.horizontalLayout_7.addWidget(self.widget_9)
         self.horizontalLayout.addWidget(self.widget)
 
         self.retranslateUi(Form_Login)
@@ -202,15 +211,15 @@ class Ui_Form_Login(object):
     def retranslateUi(self, Form_Login):
         _translate = QtCore.QCoreApplication.translate
         Form_Login.setWindowTitle(_translate("Form_Login", "Form"))
+        self.label.setText(_translate("Form_Login", "What Drugs?\n"
+"경구약.  안전하게 먹자!"))
+        self.label_2.setText(_translate("Form_Login", "2차 기업 프로젝트 : 2Parks\n"
+" 박광현, 박호현의 인공지능을 활용한\n"
+"투약 식별 및 복용관리 프로그램"))
         self.label_3.setText(_translate("Form_Login", "아이디"))
         self.label_4.setText(_translate("Form_Login", "비밀번호"))
         self.label_guide.setText(_translate("Form_Login", "TextLabel"))
         self.checkBox.setText(_translate("Form_Login", "아이디 기억하기"))
         self.btn_join.setText(_translate("Form_Login", "회원가입"))
         self.btn_login.setText(_translate("Form_Login", "로그인"))
-        self.label.setText(_translate("Form_Login", "What Drugs?\n"
-"경구약.  안전하게 먹자!"))
-        self.label_2.setText(_translate("Form_Login", "2차 기업 프로젝트 : 2Parks\n"
-" 박광현, 박호현의 인공지능을 활용한\n"
-"투약 식별 및 복용관리 프로그램"))
 from gui.compiled import my_qrc_rc

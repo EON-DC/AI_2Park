@@ -1,9 +1,12 @@
 import pickle
+import traceback
 
 import PIL
 import cv2
 import numpy as np
 import pandas as pd
+import ultralytics.engine.results
+import yaml
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer, pyqtSignal
 from PyQt5.QtGui import QPixmap, QImage
@@ -21,17 +24,34 @@ class FormCamera(QtWidgets.QWidget, Ui_Form_Camera):
         self.controller = main_controller
         self.setupUi(self)
         self.timer = QTimer(self)
-        self.detection_model = YOLO(r"model/best.pt")
+        self.detection_model = YOLO(r"model/object_detection.pt")
+        self.circle_classification_model = YOLO(r"model/circle_classification.pt")
+        self.ellipse_classification_model = YOLO(r"model/ellipse_classification.pt")
         self.cap = cv2.VideoCapture(0)
         # self.pretrained_model = keras.models.load_model(r"model/model_test.h5")
-        self.pretrained_model = None
         self.predicted_medication_mapping_list = list()
         self.temp_medi_df = pd.DataFrame()
-        self.set_up_initial()
         self.finished_signal.emit()
+        self.circle_dict, self.ellipse_dict = self.yaml_loader()
+        self.set_up_initial()
 
     def set_up_initial(self):
         self.timer.timeout.connect(self.update_frame)
+        self.label_camera_guide.setVisible(False)
+
+    def yaml_loader(self):
+        with open("model/cls_circle.yaml", 'r', encoding='utf-8') as file:
+            circle_dict = yaml.safe_load(file, )
+
+        with open("model/cls_ellipse.yaml", 'r', encoding='utf-8') as file:
+            ellipse_dict = yaml.safe_load(file, )
+        return circle_dict, ellipse_dict
+
+    def get_mapping_code_from_yaml(self, cls_num, shape_type):
+        if shape_type == "ellipse":
+            return "K-0" + self.ellipse_dict["names"][cls_num]
+        elif shape_type == "circle":
+            return "K-0" + self.circle_dict["names"][cls_num]
 
     def start_update_image(self):
         self.timer.start(120)
@@ -43,52 +63,54 @@ class FormCamera(QtWidgets.QWidget, Ui_Form_Camera):
     def update_frame(self):
         ret, frame = self.cap.read()
         if ret:
-            frame = self.detection_model.predict(source=frame, show=False, stream=False, conf=0.93, verbose=False)
+            result = self.detection_model.predict(source=frame, show=False, stream=False, conf=0.4, verbose=False)
             try:
-                self.displayImage2(frame)
+                self.displayImage(result)
             except:
+                # traceback.print_exc()
                 pass
 
-    def displayImage(self, img, boxes_data):
-        qformat = QImage.Format_RGB888
-        img = QImage(img, img.shape[1], img.shape[0], qformat)
-        img = img.rgbSwapped()  # Convert BGR to RGB
-        self.label_camera.setPixmap(QPixmap.fromImage(img))
+    def displayImage(self, frame):
+        frame: ultralytics.engine.results.Results
+        snapshot = frame[0]
+        boxes_data = snapshot.boxes
+        if len(boxes_data.cls) > 0:
+            orig_img = snapshot.orig_img
+            for cls_ in boxes_data.cls:
+                if int(cls_) == 0:  # 원형
+                    result = self.circle_classification_model.predict(source=orig_img, show=False, stream=False,
+                                                                      conf=0.6, verbose=False)
+                    is_circle = True
+                else:
+                    result = self.ellipse_classification_model.predict(source=orig_img, show=False, stream=False,
+                                                                       conf=0.6, verbose=False)
+                    is_circle = False
+                inner_boxes = result[0].boxes
+                inner_boxes: ultralytics.engine.results.Boxes
+                class_list = inner_boxes.cls
+                confidence_list = inner_boxes.conf
 
-    def displayImage2(self, frame):
-        boxes = frame[0].boxes
-        if len(boxes.cls) > 0:
-            boxes_data = boxes.data
-            orig_img = frame[0].orig_img.copy()
-            fix_img = cv2.cvtColor(orig_img, cv2.COLOR_BGR2RGB)
-            _, crop_img = self.draw_boxes_and_crop(fix_img, boxes_data)
-            for idx, cropped_img in enumerate(crop_img):
-                alpha_channel = np.ones(cropped_img.shape[:2], dtype=cropped_img.dtype) * 255
-                four_channel_img = cv2.merge([cropped_img, alpha_channel])
-                cropped_img = PIL.Image.fromarray(four_channel_img)
-                img = cropped_img.resize((32, 32))
-                img = np.array(img)
-                img_list = [img]
-                img_list = np.array(img_list)
-                # result = self.pretrained_model.predict(np.array(img_list), verbose=0)
-                result = np.array([[ 5.1012e-09,  3.7004e-11,           1]])
-                predict_result = np.round(result)
-                predict_classes = predict_result.argmax(axis=1)
-                with open(r"model/labelencoder.pickle", "rb") as file:
-                    encoder = pickle.load(file)
-                    orgin_labels = encoder.inverse_transform(predict_classes)
-                    # 분류 모델을 불러오는 것
-                    for mapping_code in orgin_labels:
-                        mapping_code = 22074  # todo : 나중에 바꾸기
-                        if mapping_code in self.predicted_medication_mapping_list:
-                            continue
-                        if self.verify_same_medication(mapping_code):
-                            continue
-                        self.add_medication_list(mapping_code)
-                        medi_df_row = self.controller.db_conn.find_medication_by_mapping_code(mapping_code)
-                        self.temp_medi_df = pd.concat([self.temp_medi_df, medi_df_row])
-                        self.temp_medi_df.reset_index(inplace=True)
-                        self.layout_medi_list.addWidget(DetectedItem(self, self.controller, medi_df_row))
+                for cls_tensor, conf_, in zip(class_list, confidence_list):
+                    class_number = cls_tensor.item()
+                    print("is_circle=", is_circle, "confidence=", conf_.item())
+                    if conf_.item() < 0.9:
+                        self.label_camera_guide.setVisible(True)
+                        continue
+                    self.label_camera_guide.setVisible(False)
+                    if is_circle:
+                        mapping_code = self.get_mapping_code_from_yaml(class_number, "circle")
+                    else:
+                        mapping_code = self.get_mapping_code_from_yaml(class_number, "ellipse")
+                    print("mapping_code= ", mapping_code)
+                    if mapping_code in self.predicted_medication_mapping_list:
+                        continue
+                    if self.verify_same_medication(mapping_code):
+                        continue
+                    self.add_medication_list(mapping_code)
+                    medi_df_row = self.controller.db_conn.find_medication_by_mapping_code(mapping_code)
+                    self.temp_medi_df = pd.concat([self.temp_medi_df, medi_df_row], ignore_index=True)
+                    # self.temp_medi_df.reset_index(inplace=True)
+                    self.layout_medi_list.addWidget(DetectedItem(self, self.controller, medi_df_row))
         try:
             img = frame[0].plot()
             qformat = QImage.Format_RGB888
@@ -107,7 +129,7 @@ class FormCamera(QtWidgets.QWidget, Ui_Form_Camera):
         self.refresh_medication_count()
 
     def verify_same_medication(self, mapping_code):
-        mapping_code = "K-"+f"{mapping_code}"
+        mapping_code = "K-" + f"{mapping_code}"
         try:
             result = self.controller.selected_prescription_df[
                 self.controller.selected_prescription_df["dl_mapping_code"] == mapping_code]

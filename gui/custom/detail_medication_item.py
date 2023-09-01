@@ -1,5 +1,10 @@
+import traceback
+
 import pandas as pd
 from PyQt5 import QtGui, QtWidgets
+from PyQt5.QtCore import QByteArray
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMessageBox
 
 from gui.compiled.compiled_detail_medication_item import Ui_Detail_Item
 from gui.form_schedule_checking import FormCheckingSchedule
@@ -27,14 +32,27 @@ class DetailMedicationItem(QtWidgets.QWidget, Ui_Detail_Item):
         self.label_etc_otc.setText(self.medication["di_etc_otc_code"][0])
         self.btn_taking_schedule.clicked.connect(lambda state: self.create_from_taking_schedule())
         self.btn_checking_schedule.clicked.connect(lambda state: self.create_form_checking_schedule())
-
+        try:
+            medication_id = int(self.medication["medication_id"][0])
+            image_bytes = self.controller.db_conn.find_image_by_medication_id_as_byte_stream(medication_id)
+            byte_array = QByteArray(image_bytes.getvalue())
+            medi_pixmap = QPixmap()
+            medi_pixmap.loadFromData(byte_array)
+            self.label_medi_image.setPixmap(medi_pixmap)
+        except:
+            traceback.print_exc()
+            print(f"이미지 못찾음 medication id: {medication_id}, 이름: {self.medication['dl_name']}")
     def create_from_taking_schedule(self):
         self.form_taking = FormTakingSchedule(self.controller, self.medication, self.prescription)
         self.form_taking.exec_()
 
     def create_form_checking_schedule(self):
-        self.form_checking = FormCheckingSchedule(self.controller, self.medication, self.prescription)
-        self.form_checking.exec_()
+        try:
+            self.form_checking = FormCheckingSchedule(self.controller, self.medication, self.prescription)
+            self.form_checking.exec_()
+        except:
+            QMessageBox.about(self, '확인', "먼저 계획을 저장해주세요.")
+            traceback.print_exc()
 
 
     def mouseDoubleClickEvent(self, a0: QtGui.QMouseEvent) -> None:

@@ -1,6 +1,8 @@
 import datetime
 import json
+from io import BytesIO
 
+import PIL
 import pandas as pd
 import psycopg2
 from sqlalchemy import create_engine
@@ -119,7 +121,10 @@ class DBConnector:
 
     def find_medication_by_mapping_code(self, mapping_code):
         self.db_connect()
-        converted_mapping_code = f"K-{mapping_code:06d}"
+        if isinstance(mapping_code, int):
+            converted_mapping_code = f"K-{mapping_code:06d}"
+        else:
+            converted_mapping_code = mapping_code
         query = f"""select * from "tb_medication" where "dl_mapping_code"='{converted_mapping_code}' """
         df = pd.read_sql(query, self.engine)
         self.db_disconnect()
@@ -131,6 +136,35 @@ class DBConnector:
         df = pd.read_sql(query, self.engine)
         self.db_disconnect()
         return df
+
+    ################################################################################
+    #
+    #  Medication Image
+    #
+    ################################################################################
+    def find_image_by_mapping_code_as_byte_stream(self, mapping_code):
+        df = self.find_medication_by_mapping_code(mapping_code)
+        medication_id = df["medication_id"][0]
+        query = f"""select image from "tb_medication_image" where "medication_id"={medication_id} """
+        self.db_connect()
+        self.cursor.execute(query)
+        image = self.cursor.fetchone()[0]
+        self.db_disconnect()
+        image_stream = BytesIO(image)
+        return image_stream
+    def find_image_by_medication_id_as_byte_stream(self, medication_id):
+        self.db_connect()
+        query = f"""select image from "tb_medication_image" where "medication_id"={medication_id} """
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()
+        self.db_disconnect()
+        if row:
+            image = row[0]
+            image_stream = BytesIO(image)
+            return image_stream
+        else:
+            print(f"No image found for medication_id: {medication_id}")
+            return None
 
     ################################################################################
     #
@@ -150,14 +184,39 @@ class DBConnector:
         self.db_disconnect()
         return df
 
+    def update_prescription(self,
+                            prescription_id,
+                            day_duration,
+                            eat_amount,
+                            daily_eat_count,
+                            first_day_eat_count,
+                            taking_start_timestamp):
+        self.db_connect()
+        query = f"""
+            update "tb_prescription" 
+                set 
+                    day_duration={day_duration},
+                    eat_amount={eat_amount},
+                    daily_eat_count={daily_eat_count},
+                    first_day_eat_count={first_day_eat_count},
+                    taking_start_timestamp=%s
+                where
+                    prescription_id={prescription_id};
+        """
+        taking_start_timestamp = taking_start_timestamp.toPyDate()
+        self.cursor.execute(query, (taking_start_timestamp,))
+        self.conn.commit()
+        self.db_disconnect()
+
     def create_prescription_with_medication_mapping_id(self,
                                                        user_id,
                                                        medication_mapping_id,
                                                        day_duration,
                                                        eat_amount,
                                                        daily_eat_count,
+                                                       first_day_eat_count,
                                                        taking_start_timestamp=None):
-        self.db_connect()
+
         # medication mapping id로 medication id 알아오기
         medi_df = self.find_medication_by_mapping_code(medication_mapping_id)
         medication_id = medi_df.to_dict('records')[0]['medication_id']
@@ -171,6 +230,7 @@ class DBConnector:
             'eat_amount': eat_amount,
             'daily_eat_count': daily_eat_count,
             'saved_timestamp': saved_timestamp,
+            'first_day_eat_count': first_day_eat_count,
             'taking_start_timestamp': taking_start_timestamp,
         }
         data = pd.DataFrame([prescription_row])
@@ -193,7 +253,8 @@ class DBConnector:
         if not prescription_df.empty:
             prescription_df = prescription_df.dropna(subset=['saved_timestamp'])
             prescription_df['saved_timestamp'] = prescription_df['saved_timestamp'].dt.tz_convert(tz="Asia/Seoul")
-            prescription_df['taking_start_timestamp'] = prescription_df['taking_start_timestamp'].dt.tz_convert(tz="Asia/Seoul")
+            prescription_df['taking_start_timestamp'] = prescription_df['taking_start_timestamp'].dt.tz_convert(
+                tz="Asia/Seoul")
         return prescription_df
 
     def find_prescription_by_prescription_id(self, prescription_id):
@@ -212,7 +273,7 @@ class DBConnector:
         query = """
             delete from "tb_prescription" where prescription_id=%s;
         """
-        self.cursor.execute(query, (prescription_id, ))
+        self.cursor.execute(query, (prescription_id,))
         self.conn.commit()
         self.db_disconnect()
 
@@ -243,14 +304,14 @@ class DBConnector:
                                                                                day,
                                                                                hour,
                                                                                minute):
-        plan_timestamp = datetime.datetime(year, month, day, hour, minute)
 
+        # 계획 새로 생성
+        plan_timestamp = datetime.datetime(year, month, day, hour, minute)
         schedule_data = {
             "prescription_id": prescription_id,
             "taking_index": taking_index,
             "plan_timestamp": plan_timestamp,
             "has_taken": False,
-            "edit_timestamp": None,
         }
         schedule_data = pd.DataFrame([schedule_data])
         self.db_connect()
@@ -259,8 +320,27 @@ class DBConnector:
         self.db_disconnect()
         return result
 
-    def update_schedule_by_has_taken(self):
-        pass
+    def update_schedule_by_schedule_id(self, schedule_id, has_taken):
+        self.db_connect()
+        query = f"""
+                    update "tb_taking_schedule"
+                        set "has_taken" = %s
+                        where 
+                            schedule_id = %s;
+                """
+        self.cursor.execute(query, (has_taken, schedule_id,))
+        self.conn.commit()
+        self.db_disconnect()
+
+    def delete_schedule_by_prescription_id(self, prescription_id):
+        # 기존 저장 정보 삭제
+        self.db_connect()
+        query = f"""
+                delete from "tb_taking_schedule" where "prescription_id"={prescription_id}
+            """
+        self.cursor.execute(query)
+        self.conn.commit()
+        self.db_disconnect()
 
 
 if __name__ == '__main__':
@@ -277,4 +357,3 @@ if __name__ == '__main__':
     print(result)
     result = conn.create_schedule_by_prescription_id_and_taking_index_and_plan_timestamp(2, 3, 2023, 8, 29, 17, 00)
     print(result)
-

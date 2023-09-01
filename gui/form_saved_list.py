@@ -15,6 +15,7 @@ class FormSavedList(QtWidgets.QWidget, Ui_Form_Saved_Medi_List):
         self.set_up_initial()
 
     def set_up_initial(self):
+        self.btn_refresh.clicked.connect(lambda state: self.refresh_list_widget())
         self.btn_new.clicked.connect(lambda state: self.create_new_medication_list())
         self.btn_delete.clicked.connect(lambda state: self.delete_selected_medi())
 

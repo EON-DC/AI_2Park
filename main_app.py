@@ -1,11 +1,20 @@
 import sys
 from multiprocessing import Process
 
+import pandas as pd
 from PyQt5 import QtWidgets
 
 import gui.custom.form_loader
 
 if __name__ == '__main__':
+    ## 각 컬럼 width 최대로
+    pd.set_option('display.max_colwidth', 150)
+    ## rows 500
+    pd.set_option('display.max_rows', 500)
+    ## columns
+    pd.set_option('display.max_columns', 500)
+    pd.set_option('display.width', 1000)
+
     process = Process(target=gui.custom.form_loader.run_loading_widget, args=(sys.argv, ))
     process.start()
 

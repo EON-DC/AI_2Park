@@ -27,7 +27,10 @@
 	font: bold 14pt &quot;맑은 고딕&quot;;
 }
 
-
+#label_camera_guide{
+	font: bold 12pt &quot;맑은 고딕&quot;;
+	color: #E8864A;
+}
 
 QPushButton {
 	background-color: #ffffff;
@@ -99,6 +102,22 @@ QPushButton:pressed {
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_camera_guide">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>아직 정확도가 낮습니다. 조금만 기다려주세요.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
           </widget>
          </item>
         </layout>
@@ -195,7 +214,7 @@ QPushButton:pressed {
             <item>
              <widget class="QScrollArea" name="scrollArea">
               <property name="horizontalScrollBarPolicy">
-               <enum>Qt::ScrollBarAlwaysOff</enum>
+               <enum>Qt::ScrollBarAsNeeded</enum>
               </property>
               <property name="widgetResizable">
                <bool>true</bool>

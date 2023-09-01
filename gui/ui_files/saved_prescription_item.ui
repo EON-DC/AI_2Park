@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>806</width>
+    <width>900</width>
     <height>128</height>
    </rect>
   </property>
@@ -102,21 +102,21 @@ QPushButton:pressed {
       <item>
        <widget class="QWidget" name="widget_2" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>200</width>
-          <height>0</height>
+          <width>300</width>
+          <height>128</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>200</width>
-          <height>16777215</height>
+          <width>300</width>
+          <height>128</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -165,15 +165,21 @@ QPushButton:pressed {
       </item>
       <item>
        <widget class="QWidget" name="widget_3" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>500</width>
+          <width>600</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>800</width>
+          <width>600</width>
           <height>16777215</height>
          </size>
         </property>
@@ -212,28 +218,15 @@ QPushButton:pressed {
                </sizepolicy>
               </property>
               <property name="text">
-               <string>저장일시: 2023-08-26 13:11</string>
+               <string>최초저장일시: 2023-08-26 13:11</string>
+              </property>
+              <property name="scaledContents">
+               <bool>false</bool>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>231</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
             <item>
              <widget class="QPushButton" name="btn_edit">
