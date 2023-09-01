@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import yaml
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QSize, QPropertyAnimation, QRect, QTimer
+from PyQt5.QtCore import QPropertyAnimation, QRect, QTimer
 from PyQt5.QtWidgets import QMessageBox
 
 from database.db_connector import DBConnector

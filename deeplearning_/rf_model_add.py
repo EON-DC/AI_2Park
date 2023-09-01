@@ -1,8 +1,6 @@
 import pickle
+
 import numpy as np
-import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_val_score
 
 # with open('random_forest_model2.pkl', 'rb') as model_file:  # 학습한 모델 불러오기
 #     loaded_model = pickle.load(model_file)

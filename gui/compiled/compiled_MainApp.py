@@ -310,4 +310,3 @@ class Ui_MainApp(object):
         self.btn_banner_2.setText(_translate("MainApp", "저장 목록         "))
 from gui.custom.bannerbutton import BannerButton
 from gui.custom.bannerlabel import BannerLabel
-from gui.compiled import my_qrc_rc

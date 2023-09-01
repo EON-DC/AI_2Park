@@ -1,16 +1,4 @@
 import pickle
-import time
-from io import BytesIO
-
-import PIL.Image
-import pandas as pd
-from selenium import webdriver
-from selenium.webdriver import Keys
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
 from database.db_connector import DBConnector
 

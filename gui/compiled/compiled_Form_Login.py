@@ -222,4 +222,3 @@ class Ui_Form_Login(object):
         self.checkBox.setText(_translate("Form_Login", "아이디 기억하기"))
         self.btn_join.setText(_translate("Form_Login", "회원가입"))
         self.btn_login.setText(_translate("Form_Login", "로그인"))
-from gui.compiled import my_qrc_rc

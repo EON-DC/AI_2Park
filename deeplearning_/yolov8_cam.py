@@ -1,15 +1,13 @@
 import queue
 import sys
 import threading
-import time
-import traceback
-import pickle
-from tensorflow import keras
-import numpy as np
+
 import PIL.Image
-import numpy
-from ultralytics import YOLO
 import cv2
+import numpy
+import numpy as np
+from ultralytics import YOLO
+
 data_queue = queue.Queue()
 send_data_queue = queue.Queue()
 # circle_model = YOLO("./runs/detect/train/weights/best.pt")

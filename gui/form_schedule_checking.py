@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 import pandas as pd
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QLabel, QHBoxLayout, QCheckBox, QMessageBox
+from PyQt5.QtWidgets import QLabel, QHBoxLayout, QMessageBox
 
 from gui.compiled.compiled_checking_schedule import Ui_FormCheckingSchedule
 from gui.custom.widget_checking_row import CheckingRow

@@ -1,9 +1,4 @@
-import pickle
-import traceback
-
-import PIL
 import cv2
-import numpy as np
 import pandas as pd
 import ultralytics.engine.results
 import yaml

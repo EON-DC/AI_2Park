@@ -1,6 +1,7 @@
 import json
 import os
-import pandas as pd
+
+
 class BboxToCoco:
     rectangle_list = ['K-011833', 'K-011846', 'K-011942', 'K-012003', 'K-012081', 'K-012212', 'K-012244',
                       'K-012246',

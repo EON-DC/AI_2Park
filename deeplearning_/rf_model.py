@@ -2,12 +2,8 @@ import pickle
 
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.model_selection import StratifiedKFold, cross_validate
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score
-import pandas as pd
-import numpy as np
 
 circle_list = ['K-011845', 'K-012080', 'K-012137', 'K-012192', 'K-012207', 'K-012256', 'K-012266', 'K-012416',
                'K-012420', 'K-012775', 'K-013020', 'K-013135', 'K-013390', 'K-013536', 'K-013829', 'K-013833',

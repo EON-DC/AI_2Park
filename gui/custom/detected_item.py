@@ -1,5 +1,5 @@
 import pandas as pd
-from PyQt5 import QtGui, QtWidgets
+from PyQt5 import QtWidgets
 
 from gui.compiled.compiled_detected_medi_item import Ui_Widget_Detected_Item
 

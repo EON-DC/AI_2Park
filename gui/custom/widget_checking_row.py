@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QCheckBox, QVBoxLayout
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QCheckBox
 
 from gui.compiled.compiled_widget_checking_row import Ui_Widget_Checking_Row
 
